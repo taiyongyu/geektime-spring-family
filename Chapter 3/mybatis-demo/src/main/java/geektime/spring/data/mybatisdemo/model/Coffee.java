@@ -14,6 +14,7 @@ import java.util.Date;
 @Builder
 /**
  * 注意跟t_coffee表中各字段的对应关系。注意驼峰式。
+ *
  */
 public class Coffee {
     private Long id;

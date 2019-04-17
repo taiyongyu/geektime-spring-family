@@ -4,35 +4,39 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 
 <generatorConfiguration>
+    <!--主要配置信息,指明id和运行环境引擎-->
     <context id="H2Tables" targetRuntime="MyBatis3">
+        <!--注意，配置是有先后顺序的。先配置plugin、再jdbcConnecton等，依次往下顺序不能乱-->
+        <!--为了实现类似lombok小工具相似的作用，需要配置一些插件，用于自动生成builder、toString方法等等-->
         <plugin type="org.mybatis.generator.plugins.FluentBuilderMethodsPlugin" />
         <plugin type="org.mybatis.generator.plugins.ToStringPlugin" />
         <plugin type="org.mybatis.generator.plugins.SerializablePlugin" />
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin" />
 
+        <!--配置需要连接的数据库信息-->
         <jdbcConnection driverClass="org.h2.Driver"
                         connectionURL="jdbc:h2:mem:testdb"
                         userId="sa"
                         password="">
         </jdbcConnection>
-
+        <!--指明要生成的java Model的相关信息-->
         <javaModelGenerator targetPackage="geektime.spring.data.mybatis.model"
                             targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
-
+        <!--指明要生成的包含sql的Mapper.xml文件的相关信息-->
         <sqlMapGenerator targetPackage="geektime.spring.data.mybatis.mapper"
                          targetProject="./src/main/resources/mapper">
             <property name="enableSubPackages" value="true" />
         </sqlMapGenerator>
-
+        <!--指明要生成的java Mapper接口类的相关信息，例如这里使用了混合模式-->
         <javaClientGenerator type="MIXEDMAPPER"
                              targetPackage="geektime.spring.data.mybatis.mapper"
                              targetProject="./src/main/java">
             <property name="enableSubPackages" value="true" />
         </javaClientGenerator>
-
+        <!--指明数据库的表和具体java类的对应关系及相关对应规则-->
         <table tableName="t_coffee" domainObjectName="Coffee" >
             <generatedKey column="id" sqlStatement="CALL IDENTITY()" identity="true" />
             <columnOverride column="price" javaType="org.joda.money.Money" jdbcType="BIGINT"

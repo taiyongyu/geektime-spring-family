@@ -34,10 +34,19 @@ public class MybatisGeneratorDemoApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-//		generateArtifacts();
+		/**
+		 * 代码分成两部分来看，
+		 * 第一部分是生成。利用mybatis generator可以自动生成Dao、Model、Mapper等文件
+		 * 第二部分是使用，利用自动生成的文件写代码。
+		 */
+		generateArtifacts();
 		playWithArtifacts();
 	}
 
+	/**
+	 * 根据配置文件自动生成相关的mapper和model等
+	 * @throws Exception
+	 */
 	private void generateArtifacts() throws Exception {
 		List<String> warnings = new ArrayList<>();
 		ConfigurationParser cp = new ConfigurationParser(warnings);
@@ -48,6 +57,9 @@ public class MybatisGeneratorDemoApplication implements ApplicationRunner {
 		myBatisGenerator.generate(null);
 	}
 
+	/**
+	 * 生成了之后，就可以使用@Autowire引入相关对象如coffeeMapper，进行数据库的操作。
+	 */
 	private void playWithArtifacts() {
 		Coffee espresso = new Coffee()
 				.withName("espresso")
