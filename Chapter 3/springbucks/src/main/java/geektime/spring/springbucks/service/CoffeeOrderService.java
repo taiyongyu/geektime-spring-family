@@ -31,6 +31,11 @@ public class CoffeeOrderService {
     }
 
     public boolean updateState(CoffeeOrder order, OrderState state) {
+        /**
+         * 参考状态机的管理，状态只允许向增大的方向进行
+         * 如，从下订单状态变为已支付状态。 从0变为1是可以允许的
+         * 但是不允许从已支付状态变回下订单状态
+         */
         if (state.compareTo(order.getState()) <= 0) {
             log.warn("Wrong State order: {}, {}", state, order.getState());
             return false;

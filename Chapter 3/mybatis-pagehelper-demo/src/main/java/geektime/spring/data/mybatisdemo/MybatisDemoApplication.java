@@ -14,6 +14,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+/**
+ * 使用@MapperScan配置mapper的路径
+ */
 @SpringBootApplication
 @Slf4j
 @MapperScan("geektime.spring.data.mybatisdemo.mapper")
@@ -27,13 +30,14 @@ public class MybatisDemoApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		// rowBounds的参数代表第几页和每页多少条记录
 		coffeeMapper.findAllWithRowBounds(new RowBounds(1, 3))
 				.forEach(c -> log.info("Page(1) Coffee {}", c));
 		coffeeMapper.findAllWithRowBounds(new RowBounds(2, 3))
 				.forEach(c -> log.info("Page(2) Coffee {}", c));
 
 		log.info("===================");
-
+        // RowBounds的limit参数为0，代表查出全部数据。不管前面设置的是第几页。
 		coffeeMapper.findAllWithRowBounds(new RowBounds(1, 0))
 				.forEach(c -> log.info("Page(1) Coffee {}", c));
 

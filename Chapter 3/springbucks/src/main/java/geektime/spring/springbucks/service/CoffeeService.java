@@ -19,6 +19,10 @@ public class CoffeeService {
     private CoffeeRepository coffeeRepository;
 
     public Optional<Coffee> findOneCoffee(String name) {
+        /**
+         * 使用ExampleMatcher的方式来进行查询
+         * 注意学习下ExampleMatcher的用法！
+         */
         ExampleMatcher matcher = ExampleMatcher.matching()
                 .withMatcher("name", exact().ignoreCase());
         Optional<Coffee> coffee = coffeeRepository.findOne(

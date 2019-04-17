@@ -8,6 +8,11 @@ import org.apache.ibatis.session.RowBounds;
 
 import java.util.List;
 
+/**
+ * 使用@Mapper注解标注这是一个Mapper接口
+ * 只需要定义方法，不需要实现方法
+ * 使用@Select注解，写sql语句。
+ */
 @Mapper
 public interface CoffeeMapper {
     @Select("select * from t_coffee order by id")

@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.util.Optional;
 
+/**
+ * 注意添加@EnableTransactionManagement 和 @EnableJpaRepositories 注解
+ */
 @Slf4j
 @EnableTransactionManagement
 @SpringBootApplication
@@ -33,13 +36,22 @@ public class SpringBucksApplication implements ApplicationRunner {
 		SpringApplication.run(SpringBucksApplication.class, args);
 	}
 
+	/**
+	 * 可以运行该程序看看结果
+	 * @param args
+	 * @throws Exception
+	 */
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		// 查出所有的coffee
 		log.info("All Coffee: {}", coffeeRepository.findAll());
-
+        // 找出Latte ，注意这里忽略了大小写
 		Optional<Coffee> latte = coffeeService.findOneCoffee("Latte");
+		// 如果存在
 		if (latte.isPresent()) {
+			// 下订单
 			CoffeeOrder order = orderService.createOrder("Li Lei", latte.get());
+			// 推动订单状态的改变
 			log.info("Update INIT to PAID: {}", orderService.updateState(order, OrderState.PAID));
 			log.info("Update PAID to INIT: {}", orderService.updateState(order, OrderState.INIT));
 		}

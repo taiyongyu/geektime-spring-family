@@ -1,3 +1,6 @@
+/**
+  由于禁用了jpa的ddl，因此需要手动删表和建表
+ */
 drop table t_coffee if exists;
 drop table t_order if exists;
 drop table t_order_coffee if exists;
@@ -24,7 +27,9 @@ create table t_order_coffee (
     coffee_order_id bigint not null,
     items_id bigint not null
 );
-
+/**
+ 也可以把data.sql的内容写入schema.sql中，是一种偷懒的写法
+ */
 insert into t_coffee (name, price, create_time, update_time) values ('espresso', 2000, now(), now());
 insert into t_coffee (name, price, create_time, update_time) values ('latte', 2500, now(), now());
 insert into t_coffee (name, price, create_time, update_time) values ('capuccino', 2500, now(), now());
