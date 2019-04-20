@@ -18,6 +18,9 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 import java.util.Arrays;
 import java.util.Date;
 
+/***
+ * 必须开启 @EnableMongoRepositories注解
+ */
 @Slf4j
 @SpringBootApplication
 @EnableMongoRepositories
@@ -34,6 +37,9 @@ public class MongoRepositoryDemoApplication implements CommandLineRunner {
 		return new MongoCustomConversions(Arrays.asList(new MoneyReadConverter()));
 	}
 
+	/**
+	 * 了解使用repository的方式对mongodb进行CRUD
+	 */
 	@Override
 	public void run(String... args) throws Exception {
 		Coffee espresso = Coffee.builder()
@@ -52,6 +58,7 @@ public class MongoRepositoryDemoApplication implements CommandLineRunner {
 				.forEach(c -> log.info("Saved Coffee {}", c));
 
 		Thread.sleep(1000);
+		// 进行更新
 		latte.setPrice(Money.of(CurrencyUnit.of("CNY"), 35.0));
 		latte.setUpdateTime(new Date());
 		coffeeRepository.save(latte);

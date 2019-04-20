@@ -10,12 +10,18 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.util.Date;
 
+/**
+ * 使用@Document注解标注文档
+ */
 @Document
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class Coffee {
+    /**
+     * 使用@Id标注id，注意import的包跟之前的是不一样的。
+     */
     @Id
     private String id;
     private String name;
