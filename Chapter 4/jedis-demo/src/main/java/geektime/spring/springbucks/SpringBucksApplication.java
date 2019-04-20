@@ -24,6 +24,9 @@ import java.util.Map;
 @EnableTransactionManagement
 @SpringBootApplication
 @EnableJpaRepositories
+/**
+ * 注意这里使用的是ApplicationRunner。 跟CommandLineRunner的区别后面会讲到
+ */
 public class SpringBucksApplication implements ApplicationRunner {
 	@Autowired
 	private CoffeeService coffeeService;
@@ -36,12 +39,21 @@ public class SpringBucksApplication implements ApplicationRunner {
 		SpringApplication.run(SpringBucksApplication.class, args);
 	}
 
+	/**
+	 * 读取配置文件中的redis属性，生成一个JedisPoolConfig
+	 * @return
+	 */
 	@Bean
 	@ConfigurationProperties("redis")
 	public JedisPoolConfig jedisPoolConfig() {
 		return new JedisPoolConfig();
 	}
 
+	/**
+	 * 指明Bean销毁时，自动触发jedispool的close方法
+	 * @param host
+	 * @return
+	 */
 	@Bean(destroyMethod = "close")
 	public JedisPool jedisPool(@Value("${redis.host}") String host) {
 		return new JedisPool(jedisPoolConfig(), host);
@@ -49,9 +61,11 @@ public class SpringBucksApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		// 查看配置的连接池信息
 		log.info(jedisPoolConfig.toString());
-
+        // 获取到jedis实例后，不用手动去close或者释放。 由spring自己来控制。
 		try (Jedis jedis = jedisPool.getResource()) {
+			// 了解jedis的相关操作
 			coffeeService.findAllCoffee().forEach(c -> {
 				jedis.hset("springbucks-menu",
 						c.getName(),
