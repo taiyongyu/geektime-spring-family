@@ -26,6 +26,9 @@ import java.util.Optional;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableRedisRepositories
+/**
+ * 必须使用@EnableRedisRepositories注解，来启用对redisRepository的支持
+ */
 public class SpringBucksApplication implements ApplicationRunner {
 	@Autowired
 	private CoffeeService coffeeService;

@@ -28,9 +28,11 @@ public class CoffeeService {
     }
 
     public Optional<Coffee> findSimpleCoffeeFromCache(String name) {
+        // 使用jpa的方式，从redis中根据name获取一个CoffeeCache对象
         Optional<CoffeeCache> cached = cacheRepository.findOneByName(name);
         if (cached.isPresent()) {
             CoffeeCache coffeeCache = cached.get();
+            // 如果存在的话，构建一个Coffee对象
             Coffee coffee = Coffee.builder()
                     .name(coffeeCache.getName())
                     .price(coffeeCache.getPrice())
@@ -38,14 +40,17 @@ public class CoffeeService {
             log.info("Coffee {} found in cache.", coffeeCache);
             return Optional.of(coffee);
         } else {
+            // 如果不存在CoffeeCache对象，从数据库中查找一个Coffee对象
             Optional<Coffee> raw = findOneCoffee(name);
             raw.ifPresent(c -> {
+                // 构建一个CoffeeCache对象
                 CoffeeCache coffeeCache = CoffeeCache.builder()
                         .id(c.getId())
                         .name(c.getName())
                         .price(c.getPrice())
                         .build();
                 log.info("Save Coffee {} to cache.", coffeeCache);
+                // 放入redis中
                 cacheRepository.save(coffeeCache);
             });
             return raw;
