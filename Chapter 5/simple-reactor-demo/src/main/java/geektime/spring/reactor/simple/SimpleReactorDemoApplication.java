@@ -20,6 +20,8 @@ public class SimpleReactorDemoApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		Flux.range(5, 6)
+				.doOnNext( i -> log.info("current emit data {} ", i))
+				.doOnRequest(n -> log.info("Request {} number", n))
 				.subscribe(i -> log.info("Subscribe {}: {}", Thread.currentThread(), i),
 						e -> log.error("error {}", e.toString()),
 						() -> log.info("Subscriber COMPLETE") //,
