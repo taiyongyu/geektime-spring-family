@@ -35,6 +35,10 @@ public class R2dbcRepositoryDemoApplication extends AbstractR2dbcConfiguration
 		SpringApplication.run(R2dbcRepositoryDemoApplication.class, args);
 	}
 
+	/**
+	 * 手动构造connectionFactory
+	 * 连接H2数据库
+	 */
 	@Bean
 	public ConnectionFactory connectionFactory() {
 		return new H2ConnectionFactory(
@@ -44,6 +48,9 @@ public class R2dbcRepositoryDemoApplication extends AbstractR2dbcConfiguration
 						.build());
 	}
 
+	/**
+	 * 手动构造Converter
+	 */
 	@Bean
 	public R2dbcCustomConversions r2dbcCustomConversions() {
 		Dialect dialect = getDialect(connectionFactory());
@@ -55,6 +62,7 @@ public class R2dbcRepositoryDemoApplication extends AbstractR2dbcConfiguration
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		// CountDownLatch是一个同步工具类,它允许一个或多个线程一直等待,直到其他线程的操作执行完后再执行。
 		CountDownLatch cdl = new CountDownLatch(2);
 
 		repository.findAllById(Flux.just(1L, 2L))
