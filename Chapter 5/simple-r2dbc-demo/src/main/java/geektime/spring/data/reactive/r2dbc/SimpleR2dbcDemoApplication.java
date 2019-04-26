@@ -27,6 +27,11 @@ import java.util.concurrent.CountDownLatch;
 
 @SpringBootApplication
 @Slf4j
+/**
+ * 这是一个Milestone的项目，springboot没有为它进行自动配置。
+ * 因此需要先继承一下AbstractR2dbcConfiguration类，进行一些基本的配置。
+ * 然后需要自己实现一些方法。
+ */
 public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 		implements ApplicationRunner {
 	@Autowired
@@ -36,6 +41,10 @@ public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 		SpringApplication.run(SimpleR2dbcDemoApplication.class, args);
 	}
 
+	/**
+	 * 自定义实现connectionFactory
+	 * 连接H2数据库
+	 */
 	@Bean
 	public ConnectionFactory connectionFactory() {
 		return new H2ConnectionFactory(
@@ -45,6 +54,9 @@ public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 						.build());
 	}
 
+	/**
+	 * 自定义Converter
+	 */
 	@Bean
 	public R2dbcCustomConversions r2dbcCustomConversions() {
 		Dialect dialect = getDialect(connectionFactory());
@@ -57,7 +69,8 @@ public class SimpleR2dbcDemoApplication extends AbstractR2dbcConfiguration
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		CountDownLatch cdl = new CountDownLatch(2);
-
+        // reactive方式访问R2DBC
+		// 两种方式
 		client.execute()
 				.sql("select * from t_coffee")
 				.as(Coffee.class)

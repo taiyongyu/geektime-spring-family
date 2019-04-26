@@ -19,7 +19,7 @@
 	</properties>
 
 	<dependencies>
-		<!-- R2DBC依赖 -->
+		<!-- R2DBC依赖 开始 -->
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-r2dbc</artifactId>
@@ -31,7 +31,7 @@
 			<artifactId>r2dbc-h2</artifactId>
 			<version>1.0.0.M6</version>
 		</dependency>
-		<!-- R2DBC依赖 -->
+		<!-- R2DBC依赖 结束 -->
 
 		<dependency>
 			<groupId>org.joda</groupId>
@@ -61,7 +61,7 @@
 		</dependency>
 	</dependencies>
 
-	<!-- Milestone的依赖不在主仓库里 -->
+	<!-- Milestone的依赖不在主仓库里。R2DBC依赖用的是Milestone仓库，需要单独配置一下仓库地址 -->
 	<repositories>
 		<repository>
 			<id>spring-milestone</id>
