@@ -26,6 +26,7 @@ public class RedisDemoApplication implements ApplicationRunner {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
     @Autowired
     private ReactiveStringRedisTemplate redisTemplate;
 
@@ -33,6 +34,11 @@ public class RedisDemoApplication implements ApplicationRunner {
         SpringApplication.run(RedisDemoApplication.class, args);
     }
 
+    /**
+     * 自定义一个reactiveRedisTemplate对象，它的kay和value，都是String类型的
+     * @param factory
+     * @return
+     */
     @Bean
     ReactiveStringRedisTemplate reactiveRedisTemplate(ReactiveRedisConnectionFactory factory) {
         return new ReactiveStringRedisTemplate(factory);
@@ -40,9 +46,10 @@ public class RedisDemoApplication implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // 取出redis中的所有hashmap对象
         ReactiveHashOperations<String, String, String> hashOps = redisTemplate.opsForHash();
         CountDownLatch cdl = new CountDownLatch(1);
-
+        // 在数据库中查询，构建Coffee列表
         List<Coffee> list = jdbcTemplate.query(
                 "select * from t_coffee", (rs, i) ->
                 Coffee.builder()
@@ -52,17 +59,17 @@ public class RedisDemoApplication implements ApplicationRunner {
                         .build()
         );
 
-        Flux.fromIterable(list)
-                .publishOn(Schedulers.single())
+        Flux.fromIterable(list)// 构建Flux对象
+                .publishOn(Schedulers.single())// 开启一个single线程
                 .doOnComplete(() -> log.info("list ok"))
-                .flatMap(c -> {
+                .flatMap(c -> {   // 使用flatMap处理每个元素
                     log.info("try to put {},{}", c.getName(), c.getPrice());
                     return hashOps.put(KEY, c.getName(), c.getPrice().toString());
                 })
                 .doOnComplete(() -> log.info("set ok"))
-                .concatWith(redisTemplate.expire(KEY, Duration.ofMinutes(1)))
+                .concatWith(redisTemplate.expire(KEY, Duration.ofMinutes(1)))  // 设置超时时间，为1分钟。
                 .doOnComplete(() -> log.info("expire ok"))
-                .onErrorResume(e -> {
+                .onErrorResume(e -> {   // 异常处理
                     log.error("exception {}", e.getMessage());
                     return Mono.just(false);
                 })
@@ -70,6 +77,7 @@ public class RedisDemoApplication implements ApplicationRunner {
                         e -> log.error("Exception {}", e.getMessage()),
                         () -> cdl.countDown());
         log.info("Waiting");
+        // 因为是在一个singe线程中执行，等待所有操作结束之后再退出。
         cdl.await();
     }
 }
