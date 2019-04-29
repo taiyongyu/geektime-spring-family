@@ -16,7 +16,7 @@ import java.io.Serializable;
 @Entity
 @Table(name = "T_COFFEE")
 @Builder
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true)  // 要加上这个注解，能免去很多告警
 @ToString(callSuper = true)
 @NoArgsConstructor
 @AllArgsConstructor

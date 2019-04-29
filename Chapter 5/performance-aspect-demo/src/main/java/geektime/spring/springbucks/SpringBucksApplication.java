@@ -23,6 +23,9 @@ import java.util.Optional;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableAspectJAutoProxy
+/**
+ * 使用@EnableAspectJAutoProxy注解开启AspectJ
+ */
 public class SpringBucksApplication implements ApplicationRunner {
 	@Autowired
 	private CoffeeRepository coffeeRepository;
