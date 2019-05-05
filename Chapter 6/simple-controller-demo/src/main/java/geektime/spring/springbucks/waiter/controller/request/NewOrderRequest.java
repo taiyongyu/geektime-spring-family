@@ -6,6 +6,10 @@ import lombok.ToString;
 
 import java.util.List;
 
+/**
+ * @Getter 注解
+ * @Setter 注解
+ */
 @Getter
 @Setter
 @ToString

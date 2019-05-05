@@ -8,6 +8,9 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching
+/**
+ * @EnableCaching 注解开启缓存
+ */
 public class WaiterServiceApplication {
 
 	public static void main(String[] args) {

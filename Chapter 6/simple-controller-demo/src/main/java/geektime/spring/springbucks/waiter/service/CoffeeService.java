@@ -17,6 +17,9 @@ import java.util.Map;
 @Service
 @Slf4j
 @CacheConfig(cacheNames = "CoffeeCache")
+/**
+ * 使用@CacheConfig注解和@Cacheable注解，使用缓存。
+ */
 public class CoffeeService {
     @Autowired
     private CoffeeRepository coffeeRepository;
