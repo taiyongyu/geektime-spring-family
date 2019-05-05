@@ -16,7 +16,14 @@ import java.util.Date;
 
 @Component
 @Slf4j
+/**
+ * springboot提供了两个接口，分别为CommandLineRunner和ApplicationRunner。他们的执行时机为容器启动完成的时候。
+ * 这两个接口中都有一个run方法，我们只需要实现这个方法即可。
+ * 这两个接口的不同之处在于：ApplicationRunner中run方法的参数为ApplicationArguments，而CommandLineRunner接口中run方法的参数为String数组。
+ * 想要更详细地获取命令行参数，那就使用ApplicationRunner接口。
+ */
 public class SpringbucksRunner implements ApplicationRunner {
+
     @Autowired
     private CoffeeService coffeeService;
     @Autowired

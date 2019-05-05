@@ -29,6 +29,7 @@ public class CoffeeService {
     }
 
     public Mono<Coffee> findOneCoffee(String name) {
+        // switchIfEmpty 如果前面的操作没有结果的话，就从后面的操作中取数。
         return redisTemplate.opsForValue().get(PREFIX + name)
                 .switchIfEmpty(coffeeRepository.findByName(name)
                         .doOnSuccess(s -> log.info("Loading {} from DB.", name)));

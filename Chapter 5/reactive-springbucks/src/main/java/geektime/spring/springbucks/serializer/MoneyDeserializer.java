@@ -8,7 +8,9 @@ import org.joda.money.CurrencyUnit;
 import org.joda.money.Money;
 
 import java.io.IOException;
-
+/**
+ * 自定义反序列化方式，针对Money类
+ */
 public class MoneyDeserializer extends StdDeserializer<Money> {
     protected MoneyDeserializer() {
         super(Money.class);

@@ -7,6 +7,10 @@ import org.joda.money.Money;
 
 import java.io.IOException;
 
+/**
+ * 自定义序列化方式，针对Money类
+ */
+
 public class MoneySerializer extends StdSerializer<Money> {
     protected MoneySerializer() {
         super(Money.class);
