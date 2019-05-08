@@ -44,8 +44,14 @@ public class CoffeeController {
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
+    /**
+     * 使用@Valid 注解做一个验证
+     */
     public Coffee addCoffee(@Valid NewCoffeeRequest newCoffee,
                             BindingResult result) {
+        /**
+         * 使用BindingResult 绑定校验结果 可以进行手动处理
+         */
         if (result.hasErrors()) {
             // 这里先简单处理一下，后续讲到异常处理时会改
             log.warn("Binding Errors: {}", result);
@@ -54,6 +60,11 @@ public class CoffeeController {
         return coffeeService.saveCoffee(newCoffee.getName(), newCoffee.getPrice());
     }
 
+    /**
+     * 不使用BindingResult 绑定返回结果
+     * 则spring会自动来处理校验失败的情况
+     */
+
 //    @PostMapping(path = "/", consumes = MediaType.APPLICATION_FORM_URLENCODED_VALUE)
 //    @ResponseBody
 //    @ResponseStatus(HttpStatus.CREATED)
@@ -61,11 +72,18 @@ public class CoffeeController {
 //        return coffeeService.saveCoffee(newCoffee.getName(), newCoffee.getPrice());
 //    }
 
+    /**
+     * 注意，跟上面的方法中虽然path路径是一样的，但是consumes指定处理不同的数据，因此不冲突。
+     * MultipartFile 用于文件上传
+     * @param file
+     * @return
+     */
     @PostMapping(path = "/", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     @ResponseBody
     @ResponseStatus(HttpStatus.CREATED)
     public List<Coffee> batchAddCoffee(@RequestParam("file") MultipartFile file) {
         List<Coffee> coffees = new ArrayList<>();
+        // 如果文件不为空，则一行一行进行解析，保存进数据库。
         if (!file.isEmpty()) {
             BufferedReader reader = null;
             try {
