@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/order")
 @Slf4j
+/**
+ * 学习跟请求有关的注解，尤其是consumes、produces、HttpStatus、params等的作用
+ */
 public class CoffeeOrderController {
     @Autowired
     private CoffeeOrderService orderService;
