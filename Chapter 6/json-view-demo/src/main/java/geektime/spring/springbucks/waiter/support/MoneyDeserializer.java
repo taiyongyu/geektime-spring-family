@@ -11,6 +11,9 @@ import org.springframework.boot.jackson.JsonComponent;
 import java.io.IOException;
 
 @JsonComponent
+/**
+ * 使用@JsonComponent注解，将类注册到Jackson序列化器和反序列化器
+ */
 public class MoneyDeserializer extends StdDeserializer<Money> {
     protected MoneyDeserializer() {
         super(Money.class);
