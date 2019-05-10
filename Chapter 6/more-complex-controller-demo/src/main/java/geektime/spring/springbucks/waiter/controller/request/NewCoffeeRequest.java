@@ -11,6 +11,10 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @ToString
+/**
+ * @NotEmpty 注解验证不为空
+ * @NotNull 注解验证不为null
+ */
 public class NewCoffeeRequest {
     @NotEmpty
     private String name;
