@@ -51,11 +51,24 @@ public class CoffeeOrderController {
         return orderService.createOrder(newOrder.getCustomer(), coffeeList);
     }
 
+    /**
+     * 注意了解@ModelAttribute注解
+     * @return
+     */
     @ModelAttribute
     public List<Coffee> coffeeList() {
         return coffeeService.getAllCoffee();
     }
 
+    /**
+     * 返回到create-order-form.html 默认路径在 templates/create-order-form.html
+     * 默认配置如下：
+     * spring.thymeleaf.prefix=classpath:/templates/
+     * spring.thymeleaf.suffix=.html
+     * 可以在application.properties文件中配置修改
+     *
+     * @return
+     */
     @GetMapping(path = "/")
     public ModelAndView showCreateForm() {
         return new ModelAndView("create-order-form");
@@ -74,6 +87,9 @@ public class CoffeeOrderController {
         Coffee[] coffeeList = coffeeService.getCoffeeByName(newOrder.getItems())
                 .toArray(new Coffee[] {});
         CoffeeOrder order = orderService.createOrder(newOrder.getCustomer(), coffeeList);
+        /**
+         * 学习重定向的方法
+         */
         return "redirect:/order/" + order.getId();
     }
 }
