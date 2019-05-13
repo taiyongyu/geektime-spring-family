@@ -101,6 +101,10 @@ public class CoffeeController {
     @RequestMapping(path = "/{id}", method = RequestMethod.GET,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseBody
+    /**
+     * 注意看这个地方的修改，返回的是ResponseEntity
+     * 学学ResponseEntity是啥！
+     */
     public ResponseEntity<Coffee> getById(@PathVariable Long id) {
         Coffee coffee = coffeeService.getCoffee(id);
         return ResponseEntity.ok()
