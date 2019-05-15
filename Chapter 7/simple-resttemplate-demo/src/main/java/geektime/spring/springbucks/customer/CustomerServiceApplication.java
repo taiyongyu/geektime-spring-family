@@ -28,10 +28,15 @@ public class CustomerServiceApplication implements ApplicationRunner {
 		new SpringApplicationBuilder()
 				.sources(CustomerServiceApplication.class)
 				.bannerMode(Banner.Mode.OFF)
-				.web(WebApplicationType.NONE)
+				.web(WebApplicationType.NONE) // 只是做个例子，配置不启动tomcat.
 				.run(args);
 	}
 
+	/**
+	 * 两种方式都可以用来构造restTemplate。
+	 * @param builder
+	 * @return
+	 */
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 //		return new RestTemplate();
@@ -40,13 +45,17 @@ public class CustomerServiceApplication implements ApplicationRunner {
 
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
+		// 构造URI
 		URI uri = UriComponentsBuilder
 				.fromUriString("http://localhost:8080/coffee/{id}")
 				.build(1);
+		// 发送get请求
 		ResponseEntity<Coffee> c = restTemplate.getForEntity(uri, Coffee.class);
+		// 获得状态码、头信息、真实返回值
 		log.info("Response Status: {}, Response Headers: {}", c.getStatusCode(), c.getHeaders().toString());
 		log.info("Coffee: {}", c.getBody());
 
+        // 带参数的post请求
 		String coffeeUri = "http://localhost:8080/coffee/";
 		Coffee request = Coffee.builder()
 				.name("Americano")
@@ -55,6 +64,7 @@ public class CustomerServiceApplication implements ApplicationRunner {
 		Coffee response = restTemplate.postForObject(coffeeUri, request, Coffee.class);
 		log.info("New Coffee: {}", response);
 
+        // 不带参数的get请求
 		String s = restTemplate.getForObject(coffeeUri, String.class);
 		log.info("String: {}", s);
 	}
