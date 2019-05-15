@@ -24,6 +24,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import javax.print.attribute.standard.Media;
 import java.math.BigDecimal;
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootApplication
@@ -52,7 +53,7 @@ public class CustomerServiceApplication implements ApplicationRunner {
 				.fromUriString("http://localhost:8080/coffee/?name={name}")
 				.build("mocha");
 		RequestEntity<Void> req = RequestEntity.get(uri)
-				.accept(MediaType.APPLICATION_XML)
+				.accept(MediaType.APPLICATION_XML)  // 通过accept方法设置相应头xml类型。
 				.build();
 		ResponseEntity<String> resp = restTemplate.exchange(req, String.class);
 		log.info("Response Status: {}, Response Headers: {}", resp.getStatusCode(), resp.getHeaders().toString());
@@ -66,10 +67,22 @@ public class CustomerServiceApplication implements ApplicationRunner {
 		Coffee response = restTemplate.postForObject(coffeeUri, request, Coffee.class);
 		log.info("New Coffee: {}", response);
 
+        // 使用ParameterizedTypeReference 对泛型做处理
 		ParameterizedTypeReference<List<Coffee>> ptr =
 				new ParameterizedTypeReference<List<Coffee>>() {};
 		ResponseEntity<List<Coffee>> list = restTemplate
 				.exchange(coffeeUri, HttpMethod.GET, null, ptr);
 		list.getBody().forEach(c -> log.info("Coffee: {}", c));
+
+		// 如果不对泛型做处理，如下所示：
+		List<Coffee> coffeeList = new ArrayList<>();
+		coffeeList = restTemplate.getForObject(coffeeUri,coffeeList.getClass());
+		coffeeList.forEach(c -> log.info("c:{}",c.getClass()));
+		// 看着是没错，但是在执行代码后，会报错：
+		// class java.util.LinkedHashMap cannnot b cast to Coffee
+		// 无法完成类型的自动转换
+
+
+
 	}
 }

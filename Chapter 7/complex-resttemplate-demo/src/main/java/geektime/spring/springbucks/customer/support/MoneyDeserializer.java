@@ -10,6 +10,10 @@ import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
 
+/**
+ * 对Money类型进行反序列化
+ *  反序列化的时候，把数字取出来，把货币单位添加上
+ */
 @JsonComponent
 public class MoneyDeserializer extends StdDeserializer<Money> {
     protected MoneyDeserializer() {

@@ -8,6 +8,11 @@ import org.springframework.boot.jackson.JsonComponent;
 
 import java.io.IOException;
 
+/**
+ * 对Money类型就行序列化
+ *  序列化的时候，把数字取出来
+ * 查查 @JsonComponent的作用
+ */
 @JsonComponent
 public class MoneySerializer extends StdSerializer<Money> {
     protected MoneySerializer() {

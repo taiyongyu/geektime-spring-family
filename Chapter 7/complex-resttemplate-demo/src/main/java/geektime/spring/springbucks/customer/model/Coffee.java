@@ -16,6 +16,7 @@ import java.util.Date;
 public class Coffee implements Serializable {
     private Long id;
     private String name;
+    // 这里使用Money类型做金额，那么在传输的时候要进行序列化与反序列化操作
     private Money price;
     private Date createTime;
     private Date updateTime;
