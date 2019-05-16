@@ -32,6 +32,11 @@ public class WebclientDemoApplication implements ApplicationRunner {
 				.run(args);
 	}
 
+	/**
+	 * 使用WebClient.Builder的方式构造webClient，并指明url
+	 * @param builder
+	 * @return
+	 */
 	@Bean
 	public WebClient webClient(WebClient.Builder builder) {
 		return builder.baseUrl("http://localhost:8080").build();
@@ -40,15 +45,15 @@ public class WebclientDemoApplication implements ApplicationRunner {
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		CountDownLatch cdl = new CountDownLatch(2);
-
+        // 构造get请求
 		webClient.get()
 				.uri("/coffee/{id}", 1)
-				.accept(MediaType.APPLICATION_JSON_UTF8)
-				.retrieve()
-				.bodyToMono(Coffee.class)
+				.accept(MediaType.APPLICATION_JSON_UTF8) // 构造accept头信息，json utf8 格式
+				.retrieve()// 获取response
+				.bodyToMono(Coffee.class) // 转换成Coffee类型
 				.doOnError(t -> log.error("Error: ", t))
 				.doFinally(s -> cdl.countDown())
-				.subscribeOn(Schedulers.single())
+				.subscribeOn(Schedulers.single()) // 在singe线程中做subscribe
 				.subscribe(c -> log.info("Coffee 1: {}", c));
 
 		Mono<Coffee> americano = Mono.just(
@@ -57,22 +62,23 @@ public class WebclientDemoApplication implements ApplicationRunner {
 						.price(Money.of(CurrencyUnit.of("CNY"), 25.00))
 						.build()
 		);
+		// 构造post请求
 		webClient.post()
 				.uri("/coffee/")
-				.body(americano, Coffee.class)
-				.retrieve()
-				.bodyToMono(Coffee.class)
+				.body(americano, Coffee.class)// post的正文就是上面构造的 americano coffee
+				.retrieve()// 获取结果
+				.bodyToMono(Coffee.class)// 结果类型转换
 				.doFinally(s -> cdl.countDown())
 				.subscribeOn(Schedulers.single())
 				.subscribe(c -> log.info("Coffee Created: {}", c));
 
 		cdl.await();
-
+        // await等待上面执行完毕
 		webClient.get()
 				.uri("/coffee/")
 				.retrieve()
-				.bodyToFlux(Coffee.class)
-				.toStream()
+				.bodyToFlux(Coffee.class)// Flux对应多个结果(就是List)，Mono只对应一个结果
+				.toStream()// 将List转换成Stream才能使用各种map、filter、forEach等方法
 				.forEach(c -> log.info("Coffee in List: {}", c));
 	}
 }
