@@ -17,6 +17,9 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 对整个第七章内容做了总结和复习
+ */
 @SpringBootApplication
 @Slf4j
 public class CustomerServiceApplication {

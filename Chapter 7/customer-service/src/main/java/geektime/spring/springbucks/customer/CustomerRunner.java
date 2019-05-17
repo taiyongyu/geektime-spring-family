@@ -18,6 +18,11 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * 把runner从Application中单独拿了出来
+ * 需要添加@Component注解。
+ * 在Application启动后，runner自动执行。
+ */
 @Component
 @Slf4j
 public class CustomerRunner implements ApplicationRunner {
