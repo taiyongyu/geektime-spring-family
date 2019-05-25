@@ -19,6 +19,7 @@
 	</properties>
 
 	<dependencies>
+		<!--在spring boot starter web中可以引入restTemplate-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

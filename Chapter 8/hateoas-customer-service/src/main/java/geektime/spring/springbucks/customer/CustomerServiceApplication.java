@@ -30,11 +30,19 @@ public class CustomerServiceApplication {
 				.run(args);
 	}
 
+	/**
+	 * 注册jackson对HAL的支持
+	 * @return
+	 */
 	@Bean
 	public Jackson2HalModule jackson2HalModule() {
 		return new Jackson2HalModule();
 	}
 
+	/**
+	 * 对httpclient做简单设置
+	 * @return
+	 */
 	@Bean
 	public HttpComponentsClientHttpRequestFactory requestFactory() {
 		PoolingHttpClientConnectionManager connectionManager =
@@ -58,12 +66,17 @@ public class CustomerServiceApplication {
 		return requestFactory;
 	}
 
+	/**
+	 * 对restTemplate做简单设置
+	 * @param builder
+	 * @return
+	 */
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder
 				.setConnectTimeout(Duration.ofMillis(100))
 				.setReadTimeout(Duration.ofMillis(500))
-				.requestFactory(this::requestFactory)
+				.requestFactory(this::requestFactory) // 底层使用httpclient
 				.build();
 	}
 }

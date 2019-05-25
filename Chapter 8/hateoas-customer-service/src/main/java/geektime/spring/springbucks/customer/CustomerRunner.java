@@ -22,6 +22,9 @@ import org.springframework.web.client.RestTemplate;
 
 import java.net.URI;
 
+/**
+ * 使用客户端的方式获取HAL信息
+ */
 @Component
 @Slf4j
 public class CustomerRunner implements ApplicationRunner {
@@ -31,12 +34,18 @@ public class CustomerRunner implements ApplicationRunner {
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
+        // 从ROOT_URI中获取coffee的link
         Link coffeeLink = getLink(ROOT_URI,"coffees");
+        // 获取所有link
         readCoffeeMenu(coffeeLink);
+        // 添加新的coffee
         Resource<Coffee> americano = addCoffee(coffeeLink);
 
+        // 从ROOT_URI中获取coffeeOrder的link
         Link orderLink = getLink(ROOT_URI, "coffeeOrders");
+        // 添加新order
         addOrder(orderLink, americano);
+        // 查询结果
         queryOrders(orderLink);
     }
 
