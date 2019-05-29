@@ -20,6 +20,9 @@ import java.util.TimeZone;
 
 @SpringBootApplication
 @EnableR2dbcRepositories
+/**
+ * webFlux在实际应用中还是较少，目前这部分没有学习。
+ */
 public class WaiterServiceApplication extends AbstractR2dbcConfiguration {
 
 	public static void main(String[] args) {

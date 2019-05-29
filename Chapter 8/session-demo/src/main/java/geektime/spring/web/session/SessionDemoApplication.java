@@ -37,7 +37,6 @@ public class SessionDemoApplication {
 		}
 		return "hello " + storedName;
 	}
-
 	/**
 	 * 只要session id不发生变化，每次取出的session都是一样的。
 	 * 举个例子，采用集中式访问web应用后，会在redis中存储下session。
