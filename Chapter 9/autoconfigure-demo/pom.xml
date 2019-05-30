@@ -34,9 +34,9 @@
 		<!--</dependency>-->
 
 		<!-- 以下是基于Spring Boot的自动配置 -->
-		<!--引入的两种方法：-->
+		<!--引入依赖的两种方法：-->
 		<!--1、将依赖打成jar包，安装到本地仓库中-->
-		<!--2、在idea中引入多个module，只需要将pom文件-->
+		<!--2、在idea中引入多个module，只需要将pom文件配置到Maven Projects中-->
 		<dependency>
 			<groupId>geektime.spring.hello</groupId>
 			<artifactId>geektime-spring-boot-autoconfigure</artifactId>
