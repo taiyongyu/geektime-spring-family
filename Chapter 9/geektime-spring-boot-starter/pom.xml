@@ -9,6 +9,7 @@
 	<description>Demo project for Spring Boot</description>
 
 	<dependencies>
+		<!--自定义的stater-->
 		<dependency>
 			<groupId>geektime.spring.hello</groupId>
 			<artifactId>geektime-spring-boot-autoconfigure</artifactId>

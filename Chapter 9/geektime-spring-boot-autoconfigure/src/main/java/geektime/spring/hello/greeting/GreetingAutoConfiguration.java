@@ -21,7 +21,6 @@ public class GreetingAutoConfiguration {
      * (2)必须配置一个name为greeting.enabled的属性，它的值为true
      * 这个bean才会被创建。
      * matchIfMissing = true 指明如果没有配置这个属性，那么会默认自动配置上，且值为true
-     * @return
      */
     @Bean
     @ConditionalOnMissingBean(GreetingApplicationRunner.class)
