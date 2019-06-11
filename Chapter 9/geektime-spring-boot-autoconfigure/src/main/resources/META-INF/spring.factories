@@ -1,2 +1,22 @@
 org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
 geektime.spring.hello.greeting.GreetingAutoConfiguration
+
+#Spring Boot的扩展机制之Spring Factories
+#它在META-INF/spring.factories文件中配置接口的实现类名称，然后在程序中读取这些配置文件并实例化。
+#这种自定义的SPI(Service Provider Interface)机制是Spring Boot Starter实现的基础。
+#spring-core包里定义了SpringFactoriesLoader类，这个类实现了检索META-INF/spring.factories文件，并获取指定接口的配置的功能。在这个类中定义了两个对外的方法：
+#(1)loadFactories:根据接口类获取其实现类的实例，这个方法返回的是对象列表。
+#(2)loadFactoryNames:根据接口获取其接口类的名称，这个方法返回的是类名的列表。
+#上面的两个方法的关键都是从指定的ClassLoader中获取spring.factories文件，并解析得到类名列表.
+#在两个方法中都会遍历整个ClassLoader中所有jar包下的spring.factories文件。
+#也就是说我们可以在自己的jar中配置spring.factories文件，不会影响到其它地方的配置，也不会被别人的配置覆盖。
+#如果一个接口希望配置多个实现类，可以使用’,’进行分割。
+
+
+# spring boot实现自动配置，最主要的就是在@SpringBootApplication注解中使用了@EnableAutoConfiguration注解，
+# 在该注解中，会导入一个AutoConfigurationImportSelector的类。
+# 在该类中会去读取一个spring.factories下为EnableAutoConfiguration接口配置的类全路径名称。
+# 配置的该类全路径名称的代码实现中，应该使用@Configuration注解说明是配置类。
+
+# 注意，spring boot默认的配置都是放在application.properties文件中或者application.yml文件中，起一个全局配置的作用。
+# 思考，能否将配置不放在applicaton.properties中而使用自定义配置文件呢？
