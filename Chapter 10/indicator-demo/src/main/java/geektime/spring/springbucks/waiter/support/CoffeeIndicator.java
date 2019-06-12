@@ -6,6 +6,10 @@ import org.springframework.boot.actuate.health.Health;
 import org.springframework.boot.actuate.health.HealthIndicator;
 import org.springframework.stereotype.Component;
 
+/**
+ * 自定义HealthIndicator
+ * 然后在/actuator/health里面就能查看该indicator的详情了
+ */
 @Component
 public class CoffeeIndicator implements HealthIndicator {
     @Autowired
