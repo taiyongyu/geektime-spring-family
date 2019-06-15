@@ -36,8 +36,13 @@ public class CustomerServiceApplication {
 				.run(args);
 	}
 
+	/**
+	 * 自定义requestFactory
+	 * @return
+	 */
 	@Bean
 	public ClientHttpRequestFactory requestFactory() {
+		// 使用OkHttpClient
 		OkHttpClient okHttpClient = null;
 		try {
 			KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -57,6 +62,12 @@ public class CustomerServiceApplication {
 		return new OkHttp3ClientHttpRequestFactory(okHttpClient);
 	}
 
+	/**
+	 * 自定义restTemplate
+	 * 用restTemplate封装了底层的差异
+	 * @param builder
+	 * @return
+	 */
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder
