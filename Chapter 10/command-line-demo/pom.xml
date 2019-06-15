@@ -19,6 +19,7 @@
 	</properties>
 
 	<dependencies>
+		<!--在这里估计添加web容器，是为了演示在代码中如何关闭-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
