@@ -17,6 +17,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.TimeZone;
 
+/**
+ * 演示如何通过编程方式修改容器配置信息
+ * 实现WebServerFactoryCustomizer接口
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching
@@ -29,6 +33,7 @@ public class WaiterServiceApplication implements WebMvcConfigurer,
 
 	@Override
 	public void customize(TomcatServletWebServerFactory factory) {
+		// 定制容器压缩的配置
 		Compression compression = new Compression();
 		compression.setEnabled(true);
 		compression.setMinResponseSize(DataSize.ofBytes(512));
