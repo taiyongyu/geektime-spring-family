@@ -24,6 +24,7 @@ import java.util.List;
 public class CustomerRunner implements ApplicationRunner {
     @Autowired
     private RestTemplate restTemplate;
+    // 访问的https的地址
     @Value("${waiter.service.url}")
     private String url;
 
@@ -37,6 +38,7 @@ public class CustomerRunner implements ApplicationRunner {
     private void readMenu() {
         ParameterizedTypeReference<List<Coffee>> ptr =
                 new ParameterizedTypeReference<List<Coffee>>() {};
+        // 构造url地址，发送请求
         ResponseEntity<List<Coffee>> list = restTemplate
                 .exchange(url + "/coffee/", HttpMethod.GET, null, ptr);
         list.getBody().forEach(c -> log.info("Coffee: {}", c));

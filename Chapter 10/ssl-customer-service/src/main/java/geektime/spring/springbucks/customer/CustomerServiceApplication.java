@@ -44,14 +44,19 @@ public class CustomerServiceApplication {
 				.run(args);
 	}
 
+	/**
+	 * 构造支持SSL的requestFactory
+	 * @return
+	 */
 	@Bean
 	public HttpComponentsClientHttpRequestFactory requestFactory() {
 		SSLContext sslContext = null;
 		try {
+			// 构造SSL Context
 			sslContext = SSLContextBuilder.create()
-					// 会校验证书
+					// 方式一 会校验证书，取出配置
 					.loadTrustMaterial(keyStore.getURL(), keyPass.toCharArray())
-					// 放过所有证书校验
+					// 方式二 放过所有证书校验
 //					.loadTrustMaterial(null, (certificate, authType) -> true)
 					.build();
 		} catch(Exception e) {
@@ -64,8 +69,8 @@ public class CustomerServiceApplication {
 				.setMaxConnPerRoute(20)
 				.disableAutomaticRetries()
 				.setKeepAliveStrategy(new CustomConnectionKeepAliveStrategy())
-				.setSSLContext(sslContext)
-				.setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+				.setSSLContext(sslContext) // 设置ssl
+				.setSSLHostnameVerifier(NoopHostnameVerifier.INSTANCE) // 设置校验
 				.build();
 
 		HttpComponentsClientHttpRequestFactory requestFactory =
@@ -73,13 +78,13 @@ public class CustomerServiceApplication {
 
 		return requestFactory;
 	}
-
+    // 定制RestTemplate
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
 		return builder
 				.setConnectTimeout(Duration.ofMillis(100))
 				.setReadTimeout(Duration.ofMillis(500))
-				.requestFactory(this::requestFactory)
+				.requestFactory(this::requestFactory) // 其中使用的requestFactory是在上文中自定义的
 				.build();
 	}
 }
