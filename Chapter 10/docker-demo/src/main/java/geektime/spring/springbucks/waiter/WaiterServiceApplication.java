@@ -13,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.TimeZone;
 
+/**
+ * docker这部分暂时用不到，略。
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching

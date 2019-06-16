@@ -80,6 +80,7 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<!--打成可直接执行的jar包-->
 				<configuration>
 					<executable>true</executable>
 				</configuration>
