@@ -30,15 +30,21 @@ public class CustomerRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         showServiceInstances();
-        readMenu();
-        Long id = orderCoffee();
-        queryOrder(id);
+//        readMenu();
+//        Long id = orderCoffee();
+//        queryOrder(id);
     }
 
     private void showServiceInstances() {
         log.info("DiscoveryClient: {}", discoveryClient.getClass().getName());
+        // 通过discoveryClient.getInstances方法，根据已知的serviceId来获取每一个实例的信息。
+        // 实际上，还可以调用discoveryClient.getServices()方法来获取所有的serviceId
         discoveryClient.getInstances("waiter-service").forEach(s -> {
-            log.info("Host: {}, Port: {}", s.getHost(), s.getPort());
+
+            log.info("Host: {}, Port: {}, Uri:{}, InstanceId:{}", s.getHost(), s.getPort(),s.getUri(),s.getInstanceId());
+
+            log.info("------" + s.getScheme());
+            log.info("------" + s.getMetadata());
         });
     }
 
@@ -46,6 +52,7 @@ public class CustomerRunner implements ApplicationRunner {
         ParameterizedTypeReference<List<Coffee>> ptr =
                 new ParameterizedTypeReference<List<Coffee>>() {};
         ResponseEntity<List<Coffee>> list = restTemplate
+                // 调用服务
                 .exchange("http://waiter-service/coffee/", HttpMethod.GET, null, ptr);
         list.getBody().forEach(c -> log.info("Coffee: {}", c));
     }

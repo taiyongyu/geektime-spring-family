@@ -23,6 +23,9 @@ import java.util.concurrent.TimeUnit;
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient
+/***
+ * 使用@EnableDiscoveryClient注解而不是@EnableEurekaClient
+ */
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {
@@ -52,6 +55,11 @@ public class CustomerServiceApplication {
 		return requestFactory;
 	}
 
+	/**
+	 * 在restTemplate上面添加@LoadBalanced注解，在客户端开启负载均衡功能
+	 * @param builder
+	 * @return
+	 */
 	@LoadBalanced
 	@Bean
 	public RestTemplate restTemplate(RestTemplateBuilder builder) {
