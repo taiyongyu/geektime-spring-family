@@ -36,7 +36,7 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-		
+		<!--eureka-client-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
@@ -85,7 +85,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+    <!--必须在这里引入spring cloude的依赖 ，上面才能使用具体的各种依赖-->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

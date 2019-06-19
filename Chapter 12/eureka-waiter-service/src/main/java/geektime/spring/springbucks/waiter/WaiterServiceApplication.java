@@ -18,6 +18,9 @@ import java.util.TimeZone;
 @EnableJpaRepositories
 @EnableCaching
 @EnableDiscoveryClient
+/**
+ * 使用@EnableDiscoveryClient开启eureka client
+ */
 public class WaiterServiceApplication implements WebMvcConfigurer {
 
 	public static void main(String[] args) {

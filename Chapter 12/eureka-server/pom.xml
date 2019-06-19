@@ -20,10 +20,12 @@
 	</properties>
 
 	<dependencies>
+		<!--必须引入web-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
+		<!--eureka-server-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
@@ -35,7 +37,16 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-
+    <!--dependencies即使在子项目中不写该依赖项，那么子项目仍然会从父项目中继承该依赖项（全部继承）
+        dependencyManagement里只是声明依赖，并不实现引入，因此子项目需要显示的声明需要用的依赖。
+        如果不在子项目中声明依赖，是不会从父项目中继承下来的；
+        只有在子项目中写了该依赖项，并且没有指定具体版本，才会从父项目中继承该项，
+        并且version和scope都读取自父pom;另外如果子项目中指定了版本号，那么会使用子项目中指定的jar版本。
+    -->
+	<!--在这里引入dependencyManagement，是因为在上面需要引入spring cloud的内容，
+	    需要使用dependencyManagement统一管理一下。
+	    去掉这里dependencyManagement的部分，上面的Eureka无法引入。
+	-->
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

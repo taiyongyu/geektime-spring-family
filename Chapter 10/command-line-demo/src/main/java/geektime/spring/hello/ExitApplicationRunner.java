@@ -38,4 +38,5 @@ public class ExitApplicationRunner implements ApplicationRunner, ApplicationCont
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
+
 }
