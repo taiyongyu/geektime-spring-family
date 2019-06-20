@@ -24,7 +24,7 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @EnableDiscoveryClient
 /***
- * 使用@EnableDiscoveryClient注解而不是@EnableEurekaClient
+ * 使用@EnableDiscoveryClient注解而不是@EnableEurekaClient来添加发现服务能力，更具有通用性
  */
 public class CustomerServiceApplication {
 

@@ -30,9 +30,10 @@ public class CustomerRunner implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         showServiceInstances();
-//        readMenu();
-//        Long id = orderCoffee();
-//        queryOrder(id);
+        // 调用服务
+        readMenu();
+        Long id = orderCoffee();
+        queryOrder(id);
     }
 
     private void showServiceInstances() {
@@ -42,7 +43,6 @@ public class CustomerRunner implements ApplicationRunner {
         discoveryClient.getInstances("waiter-service").forEach(s -> {
 
             log.info("Host: {}, Port: {}, Uri:{}, InstanceId:{}", s.getHost(), s.getPort(),s.getUri(),s.getInstanceId());
-
             log.info("------" + s.getScheme());
             log.info("------" + s.getMetadata());
         });
