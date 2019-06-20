@@ -14,6 +14,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.TimeZone;
 
+/**
+ * 使用zookeeper作为服务注册中心，除了pom依赖和配置文件不一样以外，代码部分完全一致。
+ */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableCaching
