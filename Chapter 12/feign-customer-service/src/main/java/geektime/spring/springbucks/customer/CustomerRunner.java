@@ -17,6 +17,11 @@ import java.util.List;
 @Component
 @Slf4j
 public class CustomerRunner implements ApplicationRunner {
+    /**
+     * 有了Feign的支持之后，这里的调用就变得很简单了
+     * 这里调用远程的服务接口，就变得像调用本地service一样。
+     * 不用再写resttemplate或者httpclient等。
+     */
     @Autowired
     private CoffeeService coffeeService;
     @Autowired

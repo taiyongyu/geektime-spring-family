@@ -16,12 +16,21 @@ import java.util.concurrent.TimeUnit;
 @Slf4j
 @EnableDiscoveryClient
 @EnableFeignClients
+/**
+ * @EnableDiscoveryClient 注解用于服务发现
+ * @EnableFeignClients 注解用于开启Feign客户端
+ */
 public class CustomerServiceApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CustomerServiceApplication.class, args);
 	}
 
+	/**
+	 * 自定义了httpClient，使用Feign之后，虽然在程序中不需要显式的调用httpClient
+	 * 但是在底层还是需要用到。因此在这里做一个个性化定制。
+	 * @return
+	 */
 	@Bean
 	public CloseableHttpClient httpClient() {
 		return HttpClients.custom()

@@ -32,10 +32,12 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+		<!--引入feign依赖-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+		<!--要使用httpclient，引入feign-httpclient依赖-->
 		<dependency>
 			<groupId>io.github.openfeign</groupId>
 			<artifactId>feign-httpclient</artifactId>

@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
+/**
+ * 这里没有在FeignClient中使用path
+ * 而是在每个Mapping中指明了详细路径
+ */
 @FeignClient(name = "waiter-service", contextId = "coffeeOrder")
 public interface CoffeeOrderService {
     @GetMapping("/order/{id}")
