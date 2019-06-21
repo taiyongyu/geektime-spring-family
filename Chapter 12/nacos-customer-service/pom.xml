@@ -29,6 +29,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
+		<!--引入 nacos discovery-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
@@ -72,6 +73,7 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<!--引入spring-cloud-alibaba-dependencies-->
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
