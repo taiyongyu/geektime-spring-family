@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * 自定义返回serverList
+ */
 public class FixedServerList implements ServerList<Server> {
     @Autowired
     private FixedDiscoveryClient discoveryClient;

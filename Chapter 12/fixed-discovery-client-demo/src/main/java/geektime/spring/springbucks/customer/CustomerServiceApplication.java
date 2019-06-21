@@ -20,6 +20,9 @@ import org.springframework.web.client.RestTemplate;
 import java.time.Duration;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 本例实现自定义discoveryClient和ribbonClient
+ */
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient
@@ -29,11 +32,19 @@ public class CustomerServiceApplication {
         SpringApplication.run(CustomerServiceApplication.class, args);
     }
 
+    /**
+     * 自定义discoveryClient
+     * @return
+     */
     @Bean
     public DiscoveryClient fixedDiscoveryClient() {
         return new FixedDiscoveryClient();
     }
 
+    /**
+     * 自定义serverList
+     * @return
+     */
     @Bean
     public FixedServerList fixedServerList() {
         return new FixedServerList();
