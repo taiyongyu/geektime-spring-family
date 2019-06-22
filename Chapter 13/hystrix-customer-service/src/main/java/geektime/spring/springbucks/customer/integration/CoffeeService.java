@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * 演示熔断方法二：
+ *  使用Feign调用远程方法，当出现问题时，调用fallback指定的类来进行处理。
+ */
 @FeignClient(name = "waiter-service", contextId = "coffee",
         qualifier = "coffeeService", path="/coffee",
         fallback = FallbackCoffeeService.class)

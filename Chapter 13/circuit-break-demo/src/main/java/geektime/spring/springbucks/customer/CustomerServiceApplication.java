@@ -13,6 +13,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
 import java.util.concurrent.TimeUnit;
 
+/**
+ * 本例子演示如何在没有使用任何框架的情况下，如何实现断路保护。
+ */
 @SpringBootApplication
 @Slf4j
 @EnableDiscoveryClient

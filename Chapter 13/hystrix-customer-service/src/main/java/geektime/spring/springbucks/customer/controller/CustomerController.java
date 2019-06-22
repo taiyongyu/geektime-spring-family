@@ -32,6 +32,12 @@ public class CustomerController {
         return list;
     }
 
+    /**
+     * 演示熔断方法一：
+     *  使用@HystrixCommand注解，如果该方法调用出现问题
+     *  那么跳转到fallbackMethod指定的方法中去执行。
+     * @return
+     */
     @PostMapping("/order")
     @HystrixCommand(fallbackMethod = "fallbackCreateOrder")
     public CoffeeOrder createOrder() {

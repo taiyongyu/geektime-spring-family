@@ -8,8 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
+/**
+ * 演示用Feign做远程接口调用
+ */
 @FeignClient(name = "waiter-service", contextId = "coffee", path = "/coffee")
 public interface CoffeeService {
+    // params = "!name" 是什么意思？需要再查资料。
     @GetMapping(path = "/", params = "!name")
     List<Coffee> getAll();
 
