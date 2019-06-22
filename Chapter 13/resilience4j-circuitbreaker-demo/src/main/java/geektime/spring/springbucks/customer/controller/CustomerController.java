@@ -35,7 +35,7 @@ public class CustomerController {
     private CircuitBreaker circuitBreaker;
 
     /**
-     * 熔断方式二：
+     * 熔断方式二：代码方式
      *  采用构造成员变量的形式，构造一个circuitBreaker，其name为menu
      * @param registry
      */
@@ -55,7 +55,7 @@ public class CustomerController {
     }
 
     /**
-     * 熔断方式一：
+     * 熔断方式一：注解方式
      *  如果熔断后不需要进行fallback特殊处理，可以采用引入全限定的方式，引入CircuitBreaker
      *  然后给该熔断器起个名字，如order
      *  则该createOrder方法收到保护。

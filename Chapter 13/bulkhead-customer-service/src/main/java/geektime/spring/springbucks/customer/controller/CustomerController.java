@@ -34,6 +34,11 @@ public class CustomerController {
     private CircuitBreaker circuitBreaker;
     private Bulkhead bulkhead;
 
+    /**
+     * 方式二：使用代码的方式创建circuitBreaker和bulkhead
+     * @param circuitBreakerRegistry
+     * @param bulkheadRegistry
+     */
     public CustomerController(CircuitBreakerRegistry circuitBreakerRegistry,
                               BulkheadRegistry bulkheadRegistry) {
         circuitBreaker = circuitBreakerRegistry.circuitBreaker("menu");
@@ -42,6 +47,8 @@ public class CustomerController {
 
     @GetMapping("/menu")
     public List<Coffee> readMenu() {
+        // 对coffeeService.getAll()进行保护，先进行熔断保护再进行隔舱保护。
+        // Try.ofXXX就是函数式风格里的try。
         return Try.ofSupplier(
                 Bulkhead.decorateSupplier(bulkhead,
                         CircuitBreaker.decorateSupplier(circuitBreaker,
@@ -51,6 +58,10 @@ public class CustomerController {
                 .get();
     }
 
+    /**
+     * 方式一：采用注解的方式来创建circuitBreaker和bulkhead
+     * @return
+     */
     @PostMapping("/order")
     @io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker(name = "order")
     @io.github.resilience4j.bulkhead.annotation.Bulkhead(name = "order")

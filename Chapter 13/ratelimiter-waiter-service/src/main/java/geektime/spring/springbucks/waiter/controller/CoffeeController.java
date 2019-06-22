@@ -30,6 +30,9 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 这里演示使用注解的方式进行rateLimiter，使用@RateLimiter注解，name为coffee
+ */
 @RestController
 @RequestMapping("/coffee")
 @RateLimiter(name = "coffee")

@@ -20,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * 演示使用代码的方式，进行rateLimiter
+ */
 @RestController
 @RequestMapping("/order")
 @Slf4j
@@ -29,7 +32,7 @@ public class CoffeeOrderController {
     @Autowired
     private CoffeeService coffeeService;
     private RateLimiter rateLimiter;
-
+    // 创建rateLimiter
     public CoffeeOrderController(RateLimiterRegistry rateLimiterRegistry) {
         rateLimiter = rateLimiterRegistry.rateLimiter("order");
     }
@@ -38,14 +41,21 @@ public class CoffeeOrderController {
     public CoffeeOrder getOrder(@PathVariable("id") Long id) {
         CoffeeOrder order = null;
         try {
+            // 对orderService.get(id)方法进行rateLimiter保护
             order = rateLimiter.executeSupplier(() -> orderService.get(id));
             log.info("Get Order: {}", order);
         } catch(RequestNotPermitted e) {
+            // 捕获这个RequestNotPermitted exception
             log.warn("Request Not Permitted! {}", e.getMessage());
         }
         return order;
     }
 
+    /**
+     * 这里使用注解的方式进行rateLimiter，name也是order
+     * @param newOrder
+     * @return
+     */
     @PostMapping(path = "/", consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
