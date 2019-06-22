@@ -32,6 +32,7 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
+		<!--引入turbine依赖，他默认使用Eureka作为服务注册中心，在这里使用consul，所以要把Eureka的依赖排除掉-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-turbine</artifactId>
