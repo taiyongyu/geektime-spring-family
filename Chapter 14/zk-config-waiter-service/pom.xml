@@ -41,6 +41,8 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-consul-discovery</artifactId>
 		</dependency>
+		<!--添加zookeeper-config依赖-->
+		<!--注意zk的版本是3.5-->
 		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-zookeeper-config</artifactId>
